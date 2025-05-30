@@ -165,36 +165,36 @@ namespace RRHH
 
                     // Crear un DataTable para los datos del empleado
                     DataTable dt = new DataTable();
-                    dt.Columns.Add("Nombre", typeof(string));
-                    // Eliminamos "Apellido" porque no está en el DataGridView
+                    dt.Columns.Add("NombreCompleto", typeof(string));
                     dt.Columns.Add("Email", typeof(string));
-                    dt.Columns.Add("Telefono", typeof(string));
+                    dt.Columns.Add("TelefonoMovil", typeof(string));
                     dt.Columns.Add("FechaIngreso", typeof(string));
-                    // Las siguientes columnas no están en el DataGridView visible, pero las dejamos por si están en el DataSource
                     dt.Columns.Add("EstadoActivo", typeof(bool));
                     dt.Columns.Add("FormacionAcademica", typeof(string));
                     dt.Columns.Add("ExperienciaProfesional", typeof(string));
-                    dt.Columns.Add("Habilidades", typeof(string));
+                    dt.Columns.Add("Habilidad", typeof(string));
                     dt.Columns.Add("Competencias", typeof(string));
                     dt.Columns.Add("Referencias", typeof(string));
+                    dt.Columns.Add("Departamento", typeof(string));
                     dt.Columns.Add("Foto", typeof(byte[]));
 
                     // Llenar el DataTable con los datos de la fila seleccionada
                     DataRow row = dt.NewRow();
-                    row["Nombre"] = filaSeleccionada.Cells["Nombre"].Value?.ToString() ?? "Sin nombre";
-                    // Eliminamos la asignación de "Apellido"
+                    row["NombreCompleto"] = filaSeleccionada.Cells["Nombre"].Value?.ToString() ?? "Sin nombre";
+                    row["Departamento"] = filaSeleccionada.Cells["Departamento"].Value?.ToString() ?? "Sin departamento";
                     row["Email"] = filaSeleccionada.Cells["Email"].Value?.ToString() ?? "Sin email";
-                    row["Telefono"] = filaSeleccionada.Cells["Telefono"].Value?.ToString() ?? "Sin teléfono";
+                    row["TelefonoMovil"] = filaSeleccionada.Cells["Telefono"].Value?.ToString() ?? "Sin teléfono";
                     row["FechaIngreso"] = filaSeleccionada.Cells["FechaIngreso"].Value?.ToString() ?? "Sin fecha";
                     row["EstadoActivo"] = filaSeleccionada.Cells["EstadoActivo"].Value != DBNull.Value &&
                                           Convert.ToBoolean(filaSeleccionada.Cells["EstadoActivo"].Value);
                     row["FormacionAcademica"] = filaSeleccionada.Cells["FormacionAcademica"].Value?.ToString() ?? "No especificada";
                     row["ExperienciaProfesional"] = filaSeleccionada.Cells["ExperienciaProfesional"].Value?.ToString() ?? "No especificada";
-                    row["Habilidades"] = filaSeleccionada.Cells["Habilidades"].Value?.ToString() ?? "No especificadas";
+                    row["Habilidad"] = filaSeleccionada.Cells["Habilidades"].Value?.ToString() ?? "No especificadas";
                     row["Competencias"] = filaSeleccionada.Cells["Competencias"].Value?.ToString() ?? "No especificadas";
                     row["Referencias"] = filaSeleccionada.Cells["Referencias"].Value?.ToString() ?? "No especificadas";
-                    // La columna "Foto" no está en el DataGridView, así que asumimos null por ahora
-                    row["Foto"] = DBNull.Value;
+
+                    // Manejo de la foto desde la base de datos
+                    row["Foto"] = filaSeleccionada.Cells["Foto"].Value ?? DBNull.Value; // Ajusta "Foto" al nombre real de la columna
 
                     dt.Rows.Add(row);
 
